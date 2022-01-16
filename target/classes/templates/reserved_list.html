@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+    <title>Rezerve Listesi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+</head>
+<body>
+<div>
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <a class="navbar-brand text-white" href="/">Anasayfa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-white" id="navbarNav">
+            <ul class="navbar-nav">
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/list_user">Kullanıcı listesi</a>
+                    </li>
+                </div>
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/reserve_list">Rezerve Odalar</a>
+                    </li>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/logout">Çıkış</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div>
+    <div class="mt-2 ml-4">
+        <div class="card m-4 float-left" style="width: 20rem;" th:each="rezervation: ${listReserveRoom}">
+            <img class="card-img-top" th:src="@{img/306_Superior Oda.jpg}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 th:text="${rezervation.name}" class="card-title">Standart</h5>
+                    <p th:text="${rezervation.type}" class="card-text">Oda Tipleri</p>
+                    <a sec:authorize="hasAnyAuthority('ADMIN')" 
+                       class="btn btn-danger" 
+                       th:href="@{'/deleteRez/' + ${rezervation.id}}">Rezervasyon Sil</a>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
